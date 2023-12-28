@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:product_app/domain/i_product_repo.dart';
 import 'package:product_app/domain/models/product_model.dart';
 import 'package:product_app/infrastracture/failures/failures.dart';
@@ -10,6 +11,7 @@ part 'home_state.dart';
 part 'home_bloc.freezed.dart';
 
 
+@singleton
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(final IProductRepo iProductRepo) : super(HomeState.initial()) {
     on<_FetchProducts>((event, emit) async {
@@ -31,6 +33,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             fetchProductFailOrSuccessOption: Some(Right(success)),
             productModel: success),
       ));
+
+      
     });
   }
 }
