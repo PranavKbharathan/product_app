@@ -1,9 +1,9 @@
-
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_app/application/home/home_bloc.dart';
 import 'package:product_app/domain/models/product_model.dart';
+import 'package:product_app/router/auto_route.gr.dart';
 
 updateProductList({
   required BuildContext context,
@@ -28,4 +28,5 @@ updateProductList({
   }
 
   context.read<HomeBloc>().add(HomeEvent.updateList(modifiedList: data));
+  context.router.replace(const HomeRoute());
 }
