@@ -52,23 +52,4 @@ class ProductRepo implements IProductRepo {
       return const Left(Failures.serverFailure());
     }
   }
-
-  @override
-  Future<Either<Failures, List<String>>> fetchCategory() async {
-    try {
-      const url = "http://fakestoreapi.com/products/categories";
-
-      var uri = Uri.parse(url);
-
-      var response = await http.get(uri);
-      var result = jsonDecode(response.body);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(List<String>.from(result));
-      } else {
-        return Left(Failures.clientFailure(status: result));
-      }
-    } catch (e) {
-      return const Left(Failures.serverFailure());
-    }
-  }
 }
