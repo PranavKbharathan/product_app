@@ -4,4 +4,6 @@ import 'package:product_app/infrastracture/failures/failures.dart';
 
 abstract class IProductRepo {
   Future<Either<Failures, List<ProductModel>>> fetchProductDetails();
+
+  Future<Either<Failures,List<String>>> fetchCategory();
 }
