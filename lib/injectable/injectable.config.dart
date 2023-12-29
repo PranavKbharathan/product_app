@@ -26,8 +26,8 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.singleton<_i3.IProductRepo>(_i4.ProductRepo());
-    gh.singleton<_i5.HomeBloc>(_i5.HomeBloc(gh<_i3.IProductRepo>()));
+    gh.factory<_i3.IProductRepo>(() => _i4.ProductRepo());
+    gh.factory<_i5.HomeBloc>(() => _i5.HomeBloc(gh<_i3.IProductRepo>()));
     return this;
   }
 }

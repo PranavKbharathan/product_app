@@ -64,11 +64,15 @@ class SplashPage extends StatelessWidget {
                   ),
                 );
               },
-              (success) async {
-                await updateProductList(
-                    context: context,
-                    category: state.category!,
-                    productModel: state.productModel!);
+              (success) {
+
+
+               context.router.replace(const HomeRoute());
+
+                // updateProductList(
+                //     context: context,
+                //     category: state.category,
+                //     productModel: state.productModel);
               },
             ),
           );

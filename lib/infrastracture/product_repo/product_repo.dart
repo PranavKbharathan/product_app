@@ -7,7 +7,7 @@ import 'package:product_app/domain/models/product_model.dart';
 import 'package:product_app/infrastracture/failures/failures.dart';
 import 'package:http/http.dart' as http;
 
-@Singleton(as: IProductRepo)
+@Injectable(as: IProductRepo)
 class ProductRepo implements IProductRepo {
   @override
   Future<Either<Failures, List<ProductModel>>> fetchProductDetails() async {
