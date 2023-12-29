@@ -24,14 +24,14 @@ class HomePage extends StatelessWidget {
                   )
                 : ListView(
                     padding: const EdgeInsets.all(8),
-                    children: state.modifiedList!
+                    children: state.productModel!
                         .map((e) => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      e["category"],
+                                      e[0].category!,
                                       style: const TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.w700,
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                                 SizedBox(
                                   height: 200,
                                   child: ListView.builder(
-                                    itemCount: e["data"].length,
+                                    itemCount: e.length,
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
@@ -65,18 +65,18 @@ class HomePage extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Image.network(
-                                              "http://${e["data"][index].image!.substring(8)}",
+                                              "http://${e[index].image!.substring(8)}",
                                               height: 80,
                                             ),
                                             Text(
-                                              e["data"][index].title,
+                                              e[index].title!,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                               ),
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
-                                              "₹ ${e["data"][index].price.toString()}",
+                                              "₹ ${e[index].price}",
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w700,
@@ -84,17 +84,15 @@ class HomePage extends StatelessWidget {
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             RatingBarIndicator(
-                                              rating: double.parse(
-                                                e["data"][index]
-                                                    .rating["rate"]
-                                                    .toString(),
-                                              ),
+                                              rating: double.parse(e[index]
+                                                  .rating["rate"]
+                                                  .toString()),
                                               itemBuilder: (context, index) =>
                                                   const Icon(
                                                 Icons.star,
                                                 color: Colors.amber,
                                               ),
-                                              itemCount: e["data"].length,
+                                              itemCount: 5,
                                               itemSize: 20,
                                               direction: Axis.horizontal,
                                             ),

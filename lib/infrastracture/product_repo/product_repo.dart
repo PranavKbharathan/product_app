@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -10,7 +11,7 @@ import 'package:http/http.dart' as http;
 @Injectable(as: IProductRepo)
 class ProductRepo implements IProductRepo {
   @override
-  Future<Either<Failures, List<ProductModel>>> fetchProductDetails() async {
+  Future<Either<Failures, List<List<ProductModel>>>> fetchProducts() async {
     try {
       const url = "http://fakestoreapi.com/products";
 
@@ -19,12 +20,31 @@ class ProductRepo implements IProductRepo {
       var response = await http.get(uri);
       var result = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final List<ProductModel> productResult = [];
-        for (var element in result) {
-          productResult.add(ProductModel.fromJson(element));
-        }
+        final productResult =
+            (result as List).map((e) => ProductModel.fromJson(e)).toList();
 
-        return Right(productResult);
+        final sortedList =
+            productResult.fold<List<List<ProductModel>>>([], (p, e) {
+          if (p.isEmpty) {
+            return [
+              [e]
+            ];
+          }
+          final index = p.indexWhere((v) => v.first.category == e.category);
+
+          if (index == -1) {
+            return [
+              ...p,
+              [e]
+            ];
+          }
+          p[index].add(e);
+          return [...p];
+        });
+
+        log(sortedList.toString());
+
+        return Right(sortedList);
       } else {
         return Left(Failures.clientFailure(status: result));
       }
